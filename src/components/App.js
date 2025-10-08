@@ -6,12 +6,14 @@ import Loader from "./Loader";
 import Error from "./Error";
 import StartScreen from "./StartScreen";
 import Questions from "./Questions";
+import Options from "./Options";
 
 const initialState = {
   questions: [],
 
   //'loading', error, ready, active, finished
   status: "loading",
+  index: 0,
 };
 function reduces(state, act) {
   switch (act.type) {
@@ -32,7 +34,7 @@ function reduces(state, act) {
 }
 
 export default function App() {
-  const [{ questions, status }, dispatch] = useReducer(reduces, initialState);
+  const [{ questions, status, index }, dispatch] = useReducer(reduces, initialState);
 
   const numQuestions = questions.length;
 
@@ -52,7 +54,7 @@ export default function App() {
         {status === "ready" && (
           <StartScreen numQuestions={numQuestions} dispatch={dispatch} />
         )}
-        {status === "active" && <Questions />}
+        {status === "active" && <Questions question={questions[index]} />}
       </Main>
     </div>
   );
